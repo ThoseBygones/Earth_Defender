@@ -18,8 +18,9 @@ class Scoreboard():
         self.stats = stats
         
         # 显示得分信息时使用的字体设置
-        self.text_color = (30,30,30)
-        self.font = pygame.font.SysFont(None, 48)
+        self.text_color_1 = (230, 230, 230)
+        self.text_color_2 = (255, 0, 0)
+        self.font = pygame.font.SysFont("SimHei", 30)
         
         # 准备初始得分图像
         self.draw_score()
@@ -34,9 +35,8 @@ class Scoreboard():
     def draw_score(self):
         # 将得分圆整，保证分数是10的倍数
         rounded_score = round(self.stats.score, -1)
-        score_str = "Score: " + "{:,}".format(rounded_score)
-        self.score_image = self.font.render(score_str, True, self.text_color, 
-                                            self.ai_settings.bg_color)
+        score_str = "得分：" + "{:,}".format(rounded_score)
+        self.score_image = self.font.render(score_str, True, self.text_color_1)
         
         # 将得分板放在屏幕右上角
         self.score_rect = self.score_image.get_rect()
@@ -46,10 +46,9 @@ class Scoreboard():
     """将最高得分转换为渲染的图像"""
     def draw_high_score(self):
         high_score = round(self.stats.high_score, -1)
-        high_score_str = "High Score: " + "{:,}".format(high_score)
+        high_score_str = "最高分：" + "{:,}".format(high_score)
         self.high_score_image = self.font.render(high_score_str, True, 
-                                                 self.text_color, 
-                                                 self.ai_settings.bg_color)
+                                                 self.text_color_2)
         
         # 将最高得分放在屏幕顶部中央
         self.high_score_rect = self.high_score_image.get_rect()
@@ -58,9 +57,8 @@ class Scoreboard():
         
     """将等级转换为渲染的图像"""
     def draw_level(self):
-        level_str = "Level: " + str(self.stats.level)
-        self.level_image = self.font.render(level_str, True, self.text_color, 
-                                            self.ai_settings.bg_color)
+        level_str = "等级：" + str(self.stats.level)
+        self.level_image = self.font.render(level_str, True, self.text_color_1)
         # 将等级放在当前得分下方
         self.level_rect = self.level_image.get_rect()
         self.level_rect.right = self.score_rect.right
@@ -71,7 +69,7 @@ class Scoreboard():
         self.spaceships = Group()
         for spaceship_cnt in range(self.stats.spaceship_cnt):
             spaceship = Spaceship(self.ai_settings, self.screen)
-            spaceship.rect.x = 10 + spaceship_cnt * spaceship.rect.width
+            spaceship.rect.x = 10 + spaceship_cnt * (spaceship.rect.width + 10)
             spaceship.rect.y = 10
             self.spaceships.add(spaceship)
     

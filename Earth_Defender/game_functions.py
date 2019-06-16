@@ -8,6 +8,7 @@ Created on Mon Apr  8 16:34:34 2019
 import sys
 from time import sleep
 import pygame
+import random
 from bullet import Bullet
 from alien import Alien
 
@@ -19,46 +20,23 @@ def fire_bullet(ai_settings, screen, spaceship, bullets):
         new_bullet = Bullet(ai_settings, screen, spaceship)
         bullets.add(new_bullet)
      
-"""计算每行可容纳多少个外星人"""
-def get_number_aliens_x(ai_settings, alien_width):
-    # 设置外星人出现的水平范围
-    # 水平范围 = 屏幕宽度 - 2 * 外星人宽度
-    available_space_x = ai_settings.screen_width - 2 * alien_width
-    # 计算出一行能容纳的外星人数量
-    number_aliens_x = int(available_space_x / (2 * alien_width))
-    return number_aliens_x
-
-"""计算屏幕可容纳多少行外星人"""
-def get_number_rows(ai_settings, spaceship_height, alien_height):
-    # 设置外星人出现的垂直范围
-    # 垂直范围 = 屏幕高度 - 3 * 外星人高度 - 飞船高度
-    available_space_y = (ai_settings.screen_height - 
-                         (3 * alien_height) - spaceship_height)
-    number_rows = int(available_space_y / (2 * alien_height))
-    return number_rows
-
 """创建一个外星人"""
-def create_alien(ai_settings, screen, aliens, alien_number, row_number):
+def create_alien(ai_settings, screen, aliens):
     alien = Alien(ai_settings, screen)
+    # 计算外星人能出现的水平范围
+    available_space_l = alien.rect.width
+    available_space_r = ai_settings.screen_width - alien.rect.width
     # 外星人间距为外星人宽度
-    alien_width = alien.rect.width
-    alien.x = alien_width + 2 * alien_width * alien_number
-    alien.rect.x = alien.x
-    alien.rect.y = alien.rect.height + 2 * alien.rect.height * row_number
+    alien.x = random.uniform(available_space_l, available_space_r)
+    alien.rect.centerx = alien.x
+    alien.rect.y = 0 - alien.rect.height / 2
     aliens.add(alien)
-
-"""创建外星人群"""
-def create_alien_group(ai_settings, screen, spaceship, aliens):
-    # 创建一个外星人，并计算一行可以容纳多少个外星人
-    alien = Alien(ai_settings, screen)
-    number_aliens_x = get_number_aliens_x(ai_settings, alien.rect.width)
-    number_rows = get_number_rows(ai_settings, spaceship.rect.height, 
-                                  alien.rect.height)
-    # 创建多行外星人
-    for row_number in range(number_rows):
-        for alien_number in range(number_aliens_x):
-            # 创建第一个外星人并将其加入当前行
-            create_alien(ai_settings, screen, aliens, alien_number, row_number)
+    
+"""创建外星人编组"""
+def create_alien_group(ai_settings, screen, stats, aliens):
+    # 按照一定频率创建外星人
+    if stats.game_frame % 100 == 0:
+        create_alien(ai_settings, screen, aliens)
 
 """监视并响应按下键盘按键事件"""
 def check_keydown_events(event, ai_settings, screen, spaceship, bullets):
@@ -130,8 +108,8 @@ def check_play_button(ai_settings, screen, stats, sb, play_button, spaceship,
         # 清空外星人列表和子弹列表
         aliens.empty()
         bullets.empty()
-        # 创建一群新的外星人并让飞船居中
-        create_alien_group(ai_settings, screen, spaceship, aliens)
+        # 创建新的外星人并让飞船居中
+        create_alien_group(ai_settings, screen, stats, aliens)
         spaceship.place_center()
         
 """更新屏幕上的图像，并切换到新屏幕"""
@@ -139,6 +117,8 @@ def update_screen(ai_settings, screen, stats, sb, spaceship, aliens, bullets,
                   play_button):
     # 每次循环时都重新绘制屏幕
     screen.fill(ai_settings.bg_color)
+    # 显示背景图片
+    screen.blit(ai_settings.bg_image, (0, 0))
     # 在飞船和外星人之后重新绘制所有子弹
     for bullet in bullets.sprites():
         bullet.draw_bullet()
@@ -177,12 +157,15 @@ def check_bullet_alien_collisions(ai_settings, screen, stats, sb, spaceship,
     if collisions:
         # 对每个被消灭的外星人都记录得分
         for aliens in collisions.values():
-            stats.score += ai_settings.alien_points * len(aliens)
+            kill_number = len(aliens)
+            stats.score += ai_settings.alien_points * kill_number
+            stats.kill_cnt += kill_number
             sb.draw_score()
         check_high_score(stats, sb)
     
-    # 当屏幕上所有的外星人都被消灭时，生成新的外星人群
-    if len(aliens) == 0:
+    # 当消灭的外星人达到一定数量时，提升游戏等级
+    if stats.kill_cnt == 20:
+        stats.kill_cnt = 0
         # 删除现有的子弹，加快游戏节奏并新建一群外星人
         bullets.empty()
         ai_settings.increase_speed()
@@ -190,7 +173,7 @@ def check_bullet_alien_collisions(ai_settings, screen, stats, sb, spaceship,
         stats.level += 1
         sb.draw_level()
         # 穿件新的外星人群
-        create_alien_group(ai_settings, screen, spaceship, aliens)
+        create_alien_group(ai_settings, screen, stats, aliens)
     
 """有外星人到达边缘时采取相应的措施"""
 def check_aliens_edges(ai_settings, aliens):
@@ -217,7 +200,7 @@ def spaceship_hit(ai_settings, screen, stats, sb, spaceship, aliens, bullets):
         aliens.empty()
         bullets.empty()
         # 创建一群新的外星人，并将新的飞船放到屏幕底部中央
-        create_alien_group(ai_settings, screen, spaceship, aliens)
+        create_alien(ai_settings, screen, aliens)
         spaceship.place_center()
         # 暂停0.5秒给玩家作为缓冲
         sleep(0.5)
@@ -225,16 +208,14 @@ def spaceship_hit(ai_settings, screen, stats, sb, spaceship, aliens, bullets):
         stats.game_active = False
         pygame.mouse.set_visible(True)
 
-"""检查是否有外星人到达屏幕的底端"""
+"""检查是否有外星人飞出屏幕的底端"""
 def check_aliens_bottom(ai_settings, screen, stats, sb, spaceship, aliens, 
                         bullets):
     screen_rect = screen.get_rect()
     for alien in aliens.sprites():
-        if alien.rect.bottom >= screen_rect.bottom:
+        if alien.rect.top >= screen_rect.bottom:
             # 按照飞船被撞到一样进行处理
-            spaceship_hit(ai_settings, screen, stats, sb, spaceship, aliens, 
-                          bullets)
-            break
+            aliens.remove(alien)
 
 """更新外星人群中所有外星人的位置"""
 def update_aliens(ai_settings, screen, stats, sb, spaceship, aliens, bullets):

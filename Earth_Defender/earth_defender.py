@@ -18,6 +18,8 @@ from pygame.sprite import Group
 def run_game():
     # 初始化游戏并创建一个屏幕对象
     pygame.init()
+    # 设置游戏进行过程中的定时器
+    clock = pygame.time.Clock()
     # 导入设置文件中对窗口的设置
     ai_settings = Settings()
     screen = pygame.display.set_mode(
@@ -25,7 +27,7 @@ def run_game():
     # 设置窗口顶部导航栏标题
     pygame.display.set_caption("Earth Defender")
     # 创建Play按钮
-    play_button = Button(ai_settings, screen, "Play")
+    play_button = Button(ai_settings, screen, "开始游戏")
     # 创建一个用于存储游戏统计信息的实例
     stats = GameStats(ai_settings)
     # 创建得分板
@@ -36,16 +38,19 @@ def run_game():
     bullets = Group()
     # 创建一个外星人编组
     aliens = Group()
-    # 创建外星人群
-    gf.create_alien_group(ai_settings, screen, spaceship, aliens)
         
     # 开始游戏的主循环
     while True:
+        # 控制游戏最大帧率为 100
+        clock.tick(100)
         # 监视并响应键盘和鼠标事件
         gf.check_events(ai_settings, screen, stats, sb, play_button, spaceship, 
                         aliens, bullets)
         
         if stats.game_active:
+            stats.game_frame = (stats.game_frame + 1) % 200
+            #print(stats.game_frame)
+            gf.create_alien_group(ai_settings, screen, stats, aliens)
             # 更新飞船的状态
             spaceship.update()
             # 更新子弹的状态
