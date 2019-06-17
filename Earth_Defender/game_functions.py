@@ -174,6 +174,7 @@ def update_screen(ai_settings, screen, stats, sb, spaceship, aliens, bullets,
     sb.show_score()
     # 如果游戏处于非活跃状态，就绘制Play按钮
     if stats.game_state == 0:
+        screen.blit(ai_settings.ift_image, (0, 0))
         play_button.draw_button()
     elif stats.game_state == 2:
         continue_button.draw_button()

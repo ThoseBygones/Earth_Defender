@@ -20,6 +20,8 @@ class Settings():
         self.screen_width = 800
         self.screen_height = 660
         self.bg_color = (230, 230, 230)
+        self.game_icon = pygame.image.load('images/spaceship.ico')
+        self.ift_image = pygame.image.load('images/interface.png')
         self.bg_image = pygame.image.load('images/background.png')
         
         # 设置飞船数量限制

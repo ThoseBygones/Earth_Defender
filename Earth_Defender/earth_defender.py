@@ -34,6 +34,8 @@ def run_game():
             (ai_settings.screen_width, ai_settings.screen_height))
     # 设置窗口顶部导航栏标题
     pygame.display.set_caption("Earth Defender")
+    # 设置窗口顶部导航栏图标
+    pygame.display.set_icon(ai_settings.game_icon)
     # 创建“开始游戏”按钮
     play_button = Button(ai_settings, screen, "开始游戏")
     # 创建“继续游戏”按钮
