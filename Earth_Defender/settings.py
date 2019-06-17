@@ -26,9 +26,9 @@ class Settings():
         self.spaceship_limit = 3
         
         # 设置子弹基本参数
-        self.bullet_width = 2
-        self.bullet_height = 10
-        self.bullet_color = (255, 255, 255)
+        self.bullet_width = 3
+        self.bullet_height = 9
+        self.bullet_color = (0, 0, 0)
         self.bullets_limit = 10
         
         # 设置外星人向下移动的速度
