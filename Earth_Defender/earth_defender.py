@@ -5,8 +5,7 @@ Created on Sun Apr  7 22:45:48 2019
 @author: Sherlock Holmes
 """
 
-#import wxPython
-#import os
+import os
 import pygame
 from settings import Settings
 from game_stats import GameStats
@@ -24,10 +23,12 @@ def run_game():
     clock = pygame.time.Clock()
     # 导入设置文件中对窗口的设置
     ai_settings = Settings()
-    # 获取计算机屏幕分辨率大小
-    #win_size = wxPython.DisplaySize()
+    # 计算机屏幕分辨率大小
+    win_size = (1366, 768)
     # 设置窗口在计算机屏幕的正中间显示
-    #os.environ['SDL_VIDEO_WINDOW_POS'] = "%d, %d" % (win_size[0], win_size[1])
+    os.environ['SDL_VIDEO_WINDOW_POS'] = "%d, %d" % ((win_size[0] - 
+              ai_settings.screen_width) / 2, (win_size[1] - 
+                                      ai_settings.screen_height) / 2)
     # 创建游戏窗口
     screen = pygame.display.set_mode(
             (ai_settings.screen_width, ai_settings.screen_height))
