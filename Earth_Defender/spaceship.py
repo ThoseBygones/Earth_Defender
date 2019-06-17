@@ -27,30 +27,42 @@ class Spaceship(Sprite):
         self.rect.bottom = self.screen_rect.bottom
         
         # 在飞船的属性center中存储小数值
-        self.center = float(self.rect.centerx)
+        self.centerx = float(self.rect.centerx)
+        self.centery = float(self.rect.centery)
         
-        # 飞船的移动标志（向左和向右）
+        # 飞船的移动标志（上下左右）
         self.moving_left = False
         self.moving_right = False
+        self.moving_up = False
+        self.moving_down = False
         
     """根据飞船的移动标志改变飞船的位置"""
     def update(self):
         """更新飞船的self.center值而不是self.rect对象"""
         # 飞船向左移动但未移出屏幕的最左端
         if self.moving_left and self.rect.left > self.screen_rect.left:
-            self.center -= self.ai_settings.spaceship_speed_factor
+            self.centerx -= self.ai_settings.spaceship_speed_factor
         # 飞船向右移动但未移出屏幕的最右端
         if self.moving_right and self.rect.right < self.screen_rect.right:
-            self.center += self.ai_settings.spaceship_speed_factor
-        """同时按下的时候飞船位置不会改变"""
+            self.centerx += self.ai_settings.spaceship_speed_factor
+        # 飞船向上移动但还未太靠近屏幕顶端
+        if self.moving_up and (self.rect.top > self.screen_rect.top + 2 * 
+                               self.rect.width):
+            self.centery -= self.ai_settings.spaceship_speed_factor
+        # 飞船向下移动但还未移出屏幕底端
+        if self.moving_down and self.rect.bottom < self.screen_rect.bottom:
+            self.centery += self.ai_settings.spaceship_speed_factor
+        """同时按下相反方向按键时飞船位置不会改变"""
         
         # 根据self.center的值更新self.rect对象
-        self.rect.centerx = self.center
+        self.rect.centerx = self.centerx
+        self.rect.centery = self.centery
         
     def blitme(self):
         # 在指定位置绘制飞船
         self.screen.blit(self.image, self.rect)
     
-    """将飞船放置在屏幕地步中间处"""
+    """将飞船放置在屏幕底部中间处"""
     def place_center(self):
-        self.center = self.screen_rect.centerx
+        self.centerx = self.screen_rect.centerx
+        self.centery = self.screen_rect.bottom - self.rect.height / 2

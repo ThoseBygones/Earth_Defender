@@ -7,6 +7,7 @@ Created on Mon Apr  8 20:41:40 2019
 
 import pygame
 from pygame.sprite import Sprite
+import random
 
 """外星人类"""
 class Alien(Sprite):
@@ -24,9 +25,13 @@ class Alien(Sprite):
         self.rect.centerx = self.rect.width / 2
         self.rect.centery = self.rect.height / 2
         
-        # 存储外星人的准确位置
-        self.x = float(self.rect.x)
-        self.y = float(self.rect.y)
+        # 存储外星人的准确位置（中心坐标）
+        self.centerx = float(self.rect.centerx)
+        self.centery = float(self.rect.centery)
+        
+        # 外星人在横向的移动方向
+        # 值为-1时表示向左移动，为0时表示不左右移动，为1时表示向右移动
+        self.direction = 0
 
     """在指定位置绘制外星人""" 
     def blitme(self):
@@ -41,8 +46,14 @@ class Alien(Sprite):
         elif self.rect.left <= 0:
             return True
     
-    """向下移动外星人"""
+    def random_direction(self):
+        """为外星人选择一个横向移动的方向"""
+        self.direction = random.randint(-1, 1)
+    
     def update(self):
-        self.y += self.ai_settings.alien_speed_factor
-        self.rect.y = self.y
+        """更新外星人位置"""
+        self.centerx += self.direction * self.ai_settings.alien_speed_factor
+        self.centery += self.ai_settings.alien_speed_factor
+        self.rect.centerx = self.centerx
+        self.rect.centery = self.centery
     

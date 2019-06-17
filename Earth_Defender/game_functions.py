@@ -27,15 +27,15 @@ def create_alien(ai_settings, screen, aliens):
     available_space_l = alien.rect.width
     available_space_r = ai_settings.screen_width - alien.rect.width
     # 外星人间距为外星人宽度
-    alien.x = random.uniform(available_space_l, available_space_r)
-    alien.rect.centerx = alien.x
-    alien.rect.y = 0 - alien.rect.height / 2
+    alien.centerx = random.uniform(available_space_l, available_space_r)
+    alien.rect.centerx = alien.centerx
+    alien.rect.centery = 0 - alien.rect.height / 2
     aliens.add(alien)
     
 def create_alien_group(ai_settings, screen, stats, aliens):
     """创建外星人编组"""
     # 按照一定频率创建外星人
-    if stats.game_frame % 100 == 0:
+    if stats.game_frame % 80 == 0:
         create_alien(ai_settings, screen, aliens)
 
 
@@ -54,6 +54,14 @@ def check_keydown_events(event, ai_settings, screen, stats, spaceship,
     if event.key == pygame.K_RIGHT:
         # 飞船向右移动
         spaceship.moving_right = True
+    # 上箭头
+    if event.key == pygame.K_UP:
+        # 飞船向上移动
+        spaceship.moving_up = True
+    # 下箭头
+    if event.key == pygame.K_DOWN:
+        # 飞船向下移动
+        spaceship.moving_down = True
     # 空格
     if event.key == pygame.K_SPACE:
         fire_bullet(ai_settings, screen, spaceship, bullets)
@@ -71,6 +79,14 @@ def check_keyup_events(event, spaceship):
     if event.key == pygame.K_RIGHT:
         # 飞船停止移动
         spaceship.moving_right = False
+    # 上箭头
+    if event.key == pygame.K_UP:
+        # 飞船向上移动
+        spaceship.moving_up = False
+    # 下箭头
+    if event.key == pygame.K_DOWN:
+        # 飞船向下移动
+        spaceship.moving_down = False
 
 def check_events(ai_settings, screen, stats, sb, play_button, continue_button, 
                  spaceship, aliens, bullets):
@@ -205,19 +221,16 @@ def check_bullet_alien_collisions(ai_settings, screen, stats, sb, spaceship,
         # 穿件新的外星人群
         create_alien_group(ai_settings, screen, stats, aliens)
     
-def check_aliens_edges(ai_settings, aliens):
-    """有外星人到达边缘时采取相应的措施"""
+def random_aliens_direction(aliens):
+    """为每个外星人随机一个横向移动的方向"""
+    for alien in aliens:
+        alien.random_direction()
+    
+def check_aliens_edges(aliens):
+    """让所有到达边缘的外星人变向"""
     for alien in aliens.sprites():
         if alien.check_edges():
-            change_aliens_direction(ai_settings, aliens)
-            break
-        
-
-def change_aliens_direction(ai_settings, aliens):
-    """将整群外星人的位置下移，并改变它们的方向"""
-    for alien in aliens.sprites():
-        alien.rect.y += ai_settings.alien_drop_speed
-    ai_settings.alien_direction *= -1
+            alien.direction *= -1
 
 def spaceship_hit(ai_settings, screen, stats, sb, spaceship, aliens, bullets):
     """处理被外星人撞到的飞船"""
@@ -239,19 +252,20 @@ def spaceship_hit(ai_settings, screen, stats, sb, spaceship, aliens, bullets):
         stats.game_state = ai_settings.GAME_READY
         pygame.mouse.set_visible(True)
 
-def check_aliens_bottom(ai_settings, screen, stats, sb, spaceship, aliens, 
-                        bullets):
+def check_aliens_bottom(screen, aliens):
     """检查是否有外星人飞出屏幕的底端"""
     screen_rect = screen.get_rect()
     for alien in aliens.sprites():
         if alien.rect.top >= screen_rect.bottom:
-            # 按照飞船被撞到一样进行处理
+            # 将飞出屏幕的外星人移除
             aliens.remove(alien)
 
 def update_aliens(ai_settings, screen, stats, sb, spaceship, aliens, bullets):
     """更新外星人群中所有外星人的位置"""
+    # 让每个外星人选择一个横向移动的方向
+    random_aliens_direction(aliens)
     # 检查是否有外星人位于屏幕边缘
-    check_aliens_edges(ai_settings, aliens)
+    check_aliens_edges(aliens)
     aliens.update()
     
     # 检查外星人和飞船之间是否发生碰撞
@@ -259,8 +273,7 @@ def update_aliens(ai_settings, screen, stats, sb, spaceship, aliens, bullets):
         spaceship_hit(ai_settings, screen, stats, sb, spaceship, aliens, 
                       bullets)
     # 检查是否有外星人到底屏幕底端
-    check_aliens_bottom(ai_settings, screen, stats, sb, spaceship, aliens, 
-                        bullets)
+    check_aliens_bottom(screen, aliens)
 
 def check_high_score(stats, sb):
     """检查是否出现新的最高分"""

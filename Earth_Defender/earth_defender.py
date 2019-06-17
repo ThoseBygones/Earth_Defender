@@ -5,6 +5,8 @@ Created on Sun Apr  7 22:45:48 2019
 @author: Sherlock Holmes
 """
 
+#import wxPython
+#import os
 import pygame
 from settings import Settings
 from game_stats import GameStats
@@ -22,6 +24,11 @@ def run_game():
     clock = pygame.time.Clock()
     # 导入设置文件中对窗口的设置
     ai_settings = Settings()
+    # 获取计算机屏幕分辨率大小
+    #win_size = wxPython.DisplaySize()
+    # 设置窗口在计算机屏幕的正中间显示
+    #os.environ['SDL_VIDEO_WINDOW_POS'] = "%d, %d" % (win_size[0], win_size[1])
+    # 创建游戏窗口
     screen = pygame.display.set_mode(
             (ai_settings.screen_width, ai_settings.screen_height))
     # 设置窗口顶部导航栏标题
@@ -43,14 +50,14 @@ def run_game():
         
     # 开始游戏的主循环
     while True:
-        # 控制游戏最大帧率为 100
-        clock.tick(100)
+        # 控制游戏最大帧率为 120
+        clock.tick(120)
         # 监视并响应键盘和鼠标事件
         gf.check_events(ai_settings, screen, stats, sb, play_button, 
                         continue_button, spaceship, aliens, bullets)
         
         if stats.game_state == ai_settings.GAME_ACTIVE:
-            stats.game_frame = (stats.game_frame + 1) % 200
+            stats.game_frame = (stats.game_frame + 1) % 240
             #print(stats.game_frame)
             gf.create_alien_group(ai_settings, screen, stats, aliens)
             # 更新飞船的状态

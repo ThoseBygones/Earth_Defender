@@ -15,8 +15,6 @@ class GameStats():
         self.game_state = self.ai_settings.GAME_READY
         # 设置游戏的最高分
         self.high_score = 0
-        # 设置游戏初始等级
-        self.level = 1
         # 每一级内击杀外星人数量
         self.kill_cnt = 0
         # 记录游戏的帧数（对100取模）
@@ -28,6 +26,8 @@ class GameStats():
         self.spaceship_cnt = self.ai_settings.spaceship_limit
         # 初始化游戏得分
         self.score = 0
+        # 初始化游戏开始时的等级
+        self.level = 1
         # 初始化每一等级的初始击杀数量
         self.kill_cnt = 0
         # 初始化游戏的帧数
