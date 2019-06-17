@@ -26,8 +26,10 @@ def run_game():
             (ai_settings.screen_width, ai_settings.screen_height))
     # 设置窗口顶部导航栏标题
     pygame.display.set_caption("Earth Defender")
-    # 创建Play按钮
+    # 创建“开始游戏”按钮
     play_button = Button(ai_settings, screen, "开始游戏")
+    # 创建“继续游戏”按钮
+    continue_button = Button(ai_settings, screen, "继续游戏")
     # 创建一个用于存储游戏统计信息的实例
     stats = GameStats(ai_settings)
     # 创建得分板
@@ -44,10 +46,10 @@ def run_game():
         # 控制游戏最大帧率为 100
         clock.tick(100)
         # 监视并响应键盘和鼠标事件
-        gf.check_events(ai_settings, screen, stats, sb, play_button, spaceship, 
-                        aliens, bullets)
+        gf.check_events(ai_settings, screen, stats, sb, play_button, 
+                        continue_button, spaceship, aliens, bullets)
         
-        if stats.game_active:
+        if stats.game_state == ai_settings.GAME_ACTIVE:
             stats.game_frame = (stats.game_frame + 1) % 200
             #print(stats.game_frame)
             gf.create_alien_group(ai_settings, screen, stats, aliens)
@@ -61,6 +63,6 @@ def run_game():
                              bullets)
         # 更新屏幕上的图像，并切换到新屏幕
         gf.update_screen(ai_settings, screen, stats, sb, spaceship, aliens, 
-                         bullets, play_button)
+                         bullets, play_button, continue_button)
         
 run_game()

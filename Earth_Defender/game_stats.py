@@ -12,7 +12,7 @@ class GameStats():
         self.ai_settings = ai_settings
         self.reset_stats()
         # 游戏刚启动时处于非活动状态
-        self.game_active = False
+        self.game_state = self.ai_settings.GAME_READY
         # 设置游戏的最高分
         self.high_score = 0
         # 设置游戏初始等级

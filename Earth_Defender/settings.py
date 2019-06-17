@@ -11,6 +11,11 @@ import pygame
 class Settings():
     """初始化游戏的设置"""
     def __init__(self):
+        # 定义常量
+        self.GAME_READY = 0
+        self.GAME_ACTIVE = 1
+        self.GAME_PAUSED = 2
+        
         # 设置屏幕
         self.screen_width = 800
         self.screen_height = 660

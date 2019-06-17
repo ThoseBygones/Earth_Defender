@@ -13,6 +13,11 @@ Language: Python
 
 ## 版本及更新
 
+- #### 2.1版本已更新
+
+  > + 增加了游戏的暂停功能，暂停后能恢复之前的游戏状态。
+  > + 在暂停界面添加了“继续游戏”的按钮。
+  
 - #### 2.0版本已更新
 
   > + 添加了太空图片作为游戏背景。
@@ -21,8 +26,8 @@ Language: Python
   >   + 修改了外星人的移动方式，取消横向移动，改为垂直向下移动；
   >   + 修改了外星人碰到屏幕底部的判定，外星人碰到屏幕底部以后玩家的飞船数不会减少。
   > + 修改了得分面板文字的显示，英文改为中文且修改了字体和字体大小。
-  > + 修改了 “开始游戏” 按钮的背景颜色、字体、字体大小和字体颜色
-  > + 更换了外星人的图片和玩家飞船的图片
+  > + 修改了 “开始游戏” 按钮的背景颜色、字体、字体大小和字体颜色。
+  > + 更换了外星人的图片和玩家飞船的图片。
 
 - #### 1.0版本已发布
 
@@ -32,10 +37,14 @@ Language: Python
 
 ## 程序展示
 
-- #### 游戏主界面
+- #### 游戏开始前的主界面
 
   ![](https://github.com/ThoseBygones/Earth_Defender/raw/master/images/img01.jpg)
 
-- #### 游戏中的界面
+- #### 游戏进行中的界面
 
   ![](https://github.com/ThoseBygones/Earth_Defender/raw/master/images/img02.jpg)
+  
+- #### 游戏暂停时的界面
+
+  ![](https://github.com/ThoseBygones/Earth_Defender/raw/master/images/img03.jpg)
