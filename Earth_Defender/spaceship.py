@@ -8,11 +8,10 @@ Created on Mon Apr  8 16:24:33 2019
 import pygame
 from pygame.sprite import Sprite
 
-"""飞船类"""
 class Spaceship(Sprite):
-    
+    """飞船类"""
     def __init__(self, ai_settings, screen):
-        # 初始化飞船并设置其初始位置
+        """初始化飞船并设置其初始位置"""
         super().__init__()
         self.screen = screen
         self.ai_settings = ai_settings
@@ -36,9 +35,8 @@ class Spaceship(Sprite):
         self.moving_up = False
         self.moving_down = False
         
-    """根据飞船的移动标志改变飞船的位置"""
     def update(self):
-        """更新飞船的self.center值而不是self.rect对象"""
+        """根据飞船的移动标志改变飞船的位置"""
         # 飞船向左移动但未移出屏幕的最左端
         if self.moving_left and self.rect.left > self.screen_rect.left:
             self.centerx -= self.ai_settings.spaceship_speed_factor
@@ -59,10 +57,11 @@ class Spaceship(Sprite):
         self.rect.centery = self.centery
         
     def blitme(self):
-        # 在指定位置绘制飞船
+        """在指定位置绘制飞船"""
         self.screen.blit(self.image, self.rect)
     
-    """将飞船放置在屏幕底部中间处"""
+    
     def place_center(self):
+		"""将飞船放置在屏幕底部中间处"""
         self.centerx = self.screen_rect.centerx
         self.centery = self.screen_rect.bottom - self.rect.height / 2

@@ -7,11 +7,11 @@ Created on Sun Apr  7 23:03:46 2019
 
 import pygame
 
-"""存储《地球保卫者》的所有设置"""
 class Settings():
-    """初始化游戏的设置"""
+    """存储《地球保卫者》的所有设置"""
     def __init__(self):
-        # 定义常量
+        """初始化游戏的设置"""
+		# 定义常量
         self.GAME_READY = 0
         self.GAME_ACTIVE = 1
         self.GAME_PAUSED = 2
@@ -45,9 +45,9 @@ class Settings():
         # 设置游戏动态参数
         self.init_dynamic_settings()
     
-    """初始化随游戏进行而变化的设置"""    
     def init_dynamic_settings(self):
-        # 设置飞船的速度
+        """初始化随游戏进行而变化的设置"""
+		# 设置飞船的速度
         self.spaceship_speed_factor = 2.5
         # 设置子弹的飞行速度
         self.bullet_speed_factor = 3
@@ -56,9 +56,9 @@ class Settings():
         # 设置消灭每个外星人的得到的基础分数
         self.alien_points = 50
         
-    """提高速度设置"""
     def increase_speed(self):
-        self.spaceship_speed_factor *= self.speedup_rate
+        """提高速度设置"""
+		self.spaceship_speed_factor *= self.speedup_rate
         self.bullet_speed_factor *= self.speedup_rate
         self.alien_speed_factor *= self.speedup_rate
         self.alien_points = int(self.alien_points * self.score_rate)

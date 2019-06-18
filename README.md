@@ -10,6 +10,7 @@ Language: Python 3.7.3
 - 编程语言：Python 3.7.3
 - 使用 Python 中的 Pygame 编写，版本为 1.9.6 （请自行安装）。
 - 项目基础（代码和框架等）来自于人民邮电出版社 **《Python编程从入门到实践》** 书中第二部分的项目1 “外星人入侵”（第12章 ~ 第14章）。代码和游戏功能都有大量的改动。
+- **警告，本项目已被本校选修 “Python程序设计” 的同学作为期末大作业提交过，该项目代码已经在该课程授课老师（及该授课组）处留有记录。如果您未经过本作者同意就想将此项目代码作为该课程的期末大作业上交，请三思。若被该课程的授课老师（及该授课组）发现，（造成挂科等）后果自负！！！**
 
 ## 游戏说明
 
@@ -25,6 +26,10 @@ Language: Python 3.7.3
 
 ## 版本及更新
 
+- #### 3.2.1版本已更新
+
+  > + 修改了部分的注释，按照 Python 注释规范统一了所有文件中的注释。
+  
 - #### 3.2版本已更新
 
   > + 增加了程序运行时的图片界面（即在 “开始游戏” 按钮后面加了一张背景图）。
@@ -74,16 +79,16 @@ Language: Python 3.7.3
 
 - #### 游戏开始前的主界面
 
-  ![](https://github.com/ThoseBygones/Earth_Defender/raw/master/images/img01.jpg)
+  ![](https://github.com/ThoseBygones/Earth_Defender/raw/master/screenshots/screenshot01.jpg)
 
 - #### 游戏进行中的界面
 
-  ![](https://github.com/ThoseBygones/Earth_Defender/raw/master/images/img02.jpg)
+  ![](https://github.com/ThoseBygones/Earth_Defender/raw/master/screenshots/screenshot02.jpg)
   
 - #### 游戏暂停时的界面
 
-  ![](https://github.com/ThoseBygones/Earth_Defender/raw/master/images/img03.jpg)
+  ![](https://github.com/ThoseBygones/Earth_Defender/raw/master/screenshots/screenshot03.jpg)
   
 - #### 飞船自由移动
 
-  ![](https://github.com/ThoseBygones/Earth_Defender/raw/master/images/img04.jpg)
+  ![](https://github.com/ThoseBygones/Earth_Defender/raw/master/screenshots/screenshot04.jpg)

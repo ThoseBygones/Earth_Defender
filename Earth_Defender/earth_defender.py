@@ -15,8 +15,8 @@ from spaceship import Spaceship
 import game_functions as gf
 from pygame.sprite import Group
 
-"""游戏运行主函数"""
 def run_game():
+	"""游戏运行主函数"""
     # 初始化游戏并创建一个屏幕对象
     pygame.init()
     # 设置游戏进行过程中的定时器
