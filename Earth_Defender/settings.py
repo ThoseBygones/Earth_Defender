@@ -24,6 +24,9 @@ class Settings():
         self.ift_image = pygame.image.load('images/interface.png')
         self.bg_image = pygame.image.load('images/background.png')
         
+        # 设置背景音乐
+        self.bg_music = "music/奇迹再现.mp3"
+        
         # 设置飞船数量限制
         self.spaceship_limit = 3
         
@@ -58,7 +61,7 @@ class Settings():
         
     def increase_speed(self):
         """提高速度设置"""
-		self.spaceship_speed_factor *= self.speedup_rate
+        self.spaceship_speed_factor *= self.speedup_rate
         self.bullet_speed_factor *= self.speedup_rate
         self.alien_speed_factor *= self.speedup_rate
         self.alien_points = int(self.alien_points * self.score_rate)

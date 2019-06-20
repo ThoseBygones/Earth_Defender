@@ -62,6 +62,6 @@ class Spaceship(Sprite):
     
     
     def place_center(self):
-		"""将飞船放置在屏幕底部中间处"""
+        """将飞船放置在屏幕底部中间处"""
         self.centerx = self.screen_rect.centerx
         self.centery = self.screen_rect.bottom - self.rect.height / 2

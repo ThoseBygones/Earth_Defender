@@ -12,7 +12,7 @@ import random
 class Alien(Sprite):
     """外星人类"""
     def __init__(self, ai_settings, screen):
-		"""初始化外星人并设置其初始位置"""
+        """初始化外星人并设置其初始位置"""
         super().__init__()
         self.screen = screen
         self.ai_settings = ai_settings
@@ -34,11 +34,11 @@ class Alien(Sprite):
         self.direction = 0
 
     def blitme(self):
-	"""在指定位置绘制外星人""" 
+        """在指定位置绘制外星人""" 
         self.screen.blit(self.image, self.rect)
     
     def check_edges(self):
-	"""判断外星人是否移动到屏幕的边缘"""
+        """判断外星人是否移动到屏幕的边缘"""
         # 如果碰到屏幕边缘，就返回True
         screen_rect = self.screen.get_rect()
         if self.rect.right >= screen_rect.right:

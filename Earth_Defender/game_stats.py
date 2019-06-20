@@ -9,7 +9,7 @@ class GameStats():
     """记录游戏统计信息的类"""
     def __init__(self, ai_settings):
         """初始化统计信息"""
-		self.ai_settings = ai_settings
+        self.ai_settings = ai_settings
         self.reset_stats()
         # 游戏刚启动时处于非活动状态
         self.game_state = self.ai_settings.GAME_READY
@@ -21,7 +21,7 @@ class GameStats():
         self.game_frame = 0
         
     def reset_stats(self):
-	"""初始化在游戏运行期间可能变化的统计信息"""
+        """初始化在游戏运行期间可能变化的统计信息"""
         # 初始化飞船的数量
         self.spaceship_cnt = self.ai_settings.spaceship_limit
         # 初始化游戏得分

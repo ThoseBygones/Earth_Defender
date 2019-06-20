@@ -16,7 +16,7 @@ import game_functions as gf
 from pygame.sprite import Group
 
 def run_game():
-	"""游戏运行主函数"""
+    """游戏运行主函数"""
     # 初始化游戏并创建一个屏幕对象
     pygame.init()
     # 设置游戏进行过程中的定时器
@@ -36,6 +36,9 @@ def run_game():
     pygame.display.set_caption("Earth Defender")
     # 设置窗口顶部导航栏图标
     pygame.display.set_icon(ai_settings.game_icon)
+    # 导入并开始播放背景音乐
+    pygame.mixer.music.load(ai_settings.bg_music)
+    pygame.mixer.music.play(loops = 0, start = 0.0)
     # 创建“开始游戏”按钮
     play_button = Button(ai_settings, screen, "开始游戏")
     # 创建“继续游戏”按钮
