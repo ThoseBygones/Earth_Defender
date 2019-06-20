@@ -251,6 +251,7 @@ def spaceship_hit(ai_settings, screen, stats, sb, spaceship, aliens, bullets):
         sleep(0.5)
     else:
         stats.game_state = ai_settings.GAME_READY
+        stats.game_active = False
         pygame.mouse.set_visible(True)
 
 def check_aliens_bottom(screen, aliens):

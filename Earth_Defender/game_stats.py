@@ -11,6 +11,8 @@ class GameStats():
         """初始化统计信息"""
         self.ai_settings = ai_settings
         self.reset_stats()
+        # 游戏是否被激活（暂停也属于游戏被激活状态）
+        self.music_paused = False
         # 游戏刚启动时处于非活动状态
         self.game_state = self.ai_settings.GAME_READY
         # 设置游戏的最高分
